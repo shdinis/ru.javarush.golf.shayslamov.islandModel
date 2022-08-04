@@ -1,5 +1,6 @@
 package island;
 
+import animals.Animal;
 import animals.herbivores.Herbivore;
 import animals.predators.Predator;
 import plants.Plant;
@@ -10,36 +11,49 @@ import java.util.ArrayList;
 public class Location {
 
     // Списки где будут хранитсья находящиеся на локации сущности
-    List<Herbivore> herbivores = new ArrayList<>();
-    List<Predator> predators = new ArrayList<>();
+
+    List<Animal> animals = new ArrayList<>();
     List<Plant> plants = new ArrayList<>();
 
-    public void calculate(){
+    public void calculate() {
 
-        for (int i = 0; i < predators.size(); i++) {
-            Predator predator = predators.get(i);
-            predator.eat(herbivores);
+//        for (int i = 0; i < animals.size(); i++) {
+//            Animal animal = animals.get(i);
+//            animal.eat(animals);
+//
+//            //размножаемся
+//            animal.multiply();
+//
+//            //перемещаемся
+//            animal.chooseDirection();
+//
+//        }
+    }
 
+    public void addAnimalToLocation(Animal animal) {
+        animals.add(animal);
+    }
 
-            //размножаемся
-            predator.multiply();
+    public void addPlantToLocation(Plant plant) {
+        plants.add(plant);
+    }
 
-            //перемещаемся
-            predator.chooseDirection();
-
+    public void cleaningAnimalsPlantLists() {
+        for (int i = 0; i < animals.size(); i++) {
+            if (animals.get(i).isDead()){
+                animals.remove(i);
+                i--;
+            }
         }
-
-        for (int i = 0; i < herbivores.size(); i++) {
-            Herbivore herbivore = herbivores.get(i);
-            herbivore.eat(plants);
-
-            herbivore.multiply();
-
-            herbivore.chooseDirection();
+        for (int i = 0; i < plants.size(); i++) {
+            if (plants.get(i).isBitten()){
+                plants.remove(i);
+                i--;
+            }
         }
     }
 
-    public String toString(){
+    public String toString() {
         return " | | ";
     }
 }

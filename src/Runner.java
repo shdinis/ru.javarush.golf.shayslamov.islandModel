@@ -6,6 +6,7 @@ public class Runner {
         Island island = new Island();
         island.print();
         island.initialize();
+        island.initializeAnimal();
         island.print();
 
     }
