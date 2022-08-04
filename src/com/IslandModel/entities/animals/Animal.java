@@ -11,12 +11,32 @@ public abstract class Animal {
     private boolean isDead = false;
     private int saturation = 0;//насыщение
     private boolean canMoved = true;
+//    private final int travelDistance;
+
+
+public void itIsNewDay(){
+    this.canMoved = true;
+    saturation = 0;
+}
+
+    public void CanMoved() {
+        this.canMoved = false;
+    }
+
+    public boolean isCanMoved() {
+        return canMoved;
+    }
+
+//    public int getTravelDistance() {
+//        return travelDistance;
+//    }
 
 
 
     protected Animal(TypesOfAnimals type) {
         this.type = type;
         this.weight = Matrix.ANIMAL_WEIGHT[type.ordinal()];
+//        this.travelDistance = Matrix.TRAVEL_DISTANCE[type.ordinal()];//travelDistance;
 
     }
 

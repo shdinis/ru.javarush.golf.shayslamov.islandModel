@@ -1,5 +1,7 @@
 package com.IslandModel.entities.animals;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public enum TypesOfAnimals {
     //[BEAR, BOA, EAGLE, FOX, WOLF, BOAR, BUFFALO, CATERPILLAR, DEER, DUCK, GOAT, HORSE, MOUSE, RABBIT, SHEEP, PLANTS
     BEAR,//🐻
@@ -23,6 +25,6 @@ public enum TypesOfAnimals {
 //class a {
 //
 //    public static void main(String[] args) {
-//        System.out.println(Arrays.toString(TypesOfAnimals.values()));
+//        System.out.println(ThreadLocalRandom.current().nextInt(-5,-4));
 //    }
 //}

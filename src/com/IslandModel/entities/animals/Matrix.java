@@ -25,9 +25,8 @@ public final class Matrix {
                                              //[BEAR, BOA, EAGLE,   FOX,   WOLF,  BOAR,  BUFFALO, CATERPILLAR, DEER, DUCK, GOAT, HORSE, MOUSE, RABBIT, SHEEP, PLANTS
     public static final int[] ANIMAL_WEIGHT = {500000,15000,6000,8000,50000,400000,700000,10,300000,1000,60000,400000,50,2000,70000,1000};
     public static final int[] MAX_SATURATION = {80000,3000,1000,2000,8000,50000,100000,0,50000,150,10000,60000,10,450,15000,0};
-
-//    public static final int[]
-//    public static final int[]
+    public static final int[] TRAVEL_DISTANCE = {2,1,3,2,3,2,3,0,4,4,3,4,1,2,3,0};
+    public static final int[] MAX_PER_LOCATION = {5,30,20,30,30,50,10,1000,20,200,140,20,500,150,140,200};
 
     public int maxAmountInCell;//максимальное количество
     public int moveSpeed;
