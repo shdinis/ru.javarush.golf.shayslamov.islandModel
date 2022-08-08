@@ -28,11 +28,11 @@ public final class Matrix {
     public static final int[] TRAVEL_DISTANCE = {2,1,3,2,3,2,3,0,4,4,3,4,1,2,3,0};
     public static final int[] MAX_PER_LOCATION = {5,30,20,30,30,50,10,1000,20,200,140,20,500,150,140,200};
 
-    public int maxAmountInCell;//максимальное количество
-    public int moveSpeed;
-    public int eatingWeight;
+//    public int maxAmountInCell;//максимальное количество
+//    public int moveSpeed;
+//    public int eatingWeight;
 
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(TypesOfAnimals.values()));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(Arrays.toString(TypesOfAnimals.values()));
+//    }
 }

@@ -1,6 +1,9 @@
 package com.IslandModel.entities.animals;
 
+import com.IslandModel.island.Coordinates;
 import com.IslandModel.island.Entities;
+
+import java.util.ArrayList;
 
 public abstract class Animal {
 
@@ -70,6 +73,6 @@ public void itIsNewDay(){
 //
 //    public abstract void multiply();//breed
 //
-//    public abstract void chooseDirection();
+//    public abstract Coordinates chooseDirection(ArrayList<Coordinates> coordinatesToMove);
 }
 

@@ -18,5 +18,10 @@ public class Entities {
     public List<Plant> getPlants() {
         return plants;
     }
+
+    @Override
+    public String toString() {
+        return "" + animals + plants;
+    }
 }
 

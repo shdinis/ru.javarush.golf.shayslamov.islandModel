@@ -7,12 +7,18 @@ import com.IslandModel.entities.animals.herbivores.*;
 import com.IslandModel.entities.animals.predators.*;
 import com.IslandModel.entities.plants.Plant;
 
+import java.util.ArrayList;
+
 public class Location {
 
     // Списки где будут хранитсья находящиеся на локации сущности
 
     private Entities entities = new Entities();
+    private final Coordinates coordinates;
 
+    public Location(int coordinatesX, int coordinatesY) {
+        this.coordinates = Coordinates.newCoordinates(coordinatesX, coordinatesY);
+    }
 
     public void calculate() {
 
@@ -39,7 +45,10 @@ public class Location {
         }
 
         //перемещаемся
-//            animal.chooseDirection();
+        for (int i = 0; i < entities.getAnimals().size(); i++) {
+//            Coordinates конечная_точка = entities.getAnimals().get(i).chooseDirection(coordinatesToMove(entities.getAnimals().get(i)));
+
+        }
 
     }
 
@@ -107,5 +116,21 @@ public class Location {
             default -> new Sheep();
         };
         return animal;
+    }
+
+    public ArrayList<Coordinates> coordinatesToMove(Animal animal) {
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        int travelDistance = Matrix.TRAVEL_DISTANCE[animal.type.ordinal()];
+        ArrayList<Coordinates> result = new ArrayList<>();
+
+        for (int i = -travelDistance; i <= travelDistance; i++) {
+            for (int j = -travelDistance; j <= travelDistance; j++) {
+                if (0 <= i && i < Configurations.WIDTH && 0 <= j && j < Configurations.HEIGHT) {
+                    result.add(Coordinates.newCoordinates(i, j));
+                }
+            }
+        }
+        return result;//нужно сделать чтобы возвращал координату через методы самого животного может какое нибудь житвотное боится кого нибудь и не хочет туда телепортироватся)))
     }
 }

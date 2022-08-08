@@ -1,8 +1,10 @@
 package com.IslandModel.entities.plants;
 
+import com.IslandModel.island.Coordinates;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.IslandModel.island.Island.locations;
+import static com.IslandModel.island.Configurations.*;
 
 public class Plant {
 
@@ -28,23 +30,23 @@ public class Plant {
         this.bitten = true;
     }
 
-    public static void multiply() {
-        for (int ix = 0; ix < locations.length; ix++) {
-            for (int iy = 0; iy < locations[ix].length; iy++) {
-
-                int amountPlantToLocation = locations[ix][iy].getPlantsSizeToLocation();
-                if (amountPlantToLocation == 0 && ThreadLocalRandom.current().nextBoolean()) {//создаст с шансом 50% новые растения
-                    for (int i = 0; i < 2; i++) {
-                        locations[ix][iy].addPlantToLocation(new Plant());
-                    }
-                } else {
-                    for (int i = 0; i < amountPlantToLocation; i++) {
-                        locations[ix][iy].addPlantToLocation(new Plant());
-                    }
-                }
-            }
-        }
-    }
+//    public static void multiply() {
+//        for (int ix = 0; ix < WIDTH; ix++) {
+//            for (int iy = 0; iy < HEIGHT; iy++) {
+//
+//                int amountPlantToLocation = locations.get(Coordinates.newCoordinates(ix,iy)).getPlantsSizeToLocation();
+//                if (amountPlantToLocation == 0 && ThreadLocalRandom.current().nextBoolean()) {//создаст с шансом 50% новые растения
+//                    for (int i = 0; i < 2; i++) {
+//                        locations.get(Coordinates.newCoordinates(ix,iy)).addPlantToLocation(new Plant());
+//                    }
+//                } else {
+//                    for (int i = 0; i < amountPlantToLocation; i++) {
+//                        locations.get(Coordinates.newCoordinates(ix,iy)).addPlantToLocation(new Plant());
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public String toString() {

@@ -2,7 +2,11 @@ package com.IslandModel.entities.animals.herbivores;
 
 import com.IslandModel.entities.animals.Animal;
 import com.IslandModel.entities.animals.TypesOfAnimals;
+import com.IslandModel.island.Coordinates;
 import com.IslandModel.island.Entities;
+
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Herbivore extends Animal {
 
@@ -19,4 +23,12 @@ public class Herbivore extends Animal {
 
         }
     }
+
+//    @Override
+//    public Coordinates chooseDirection(ArrayList<Coordinates> coordinatesToMove) {
+//        int randomCoordinates = ThreadLocalRandom.current().nextInt(coordinatesToMove.size());
+//        return coordinatesToMove.get(randomCoordinates);
+//    }
+
+
 }
