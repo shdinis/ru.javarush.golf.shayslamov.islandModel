@@ -1,11 +1,11 @@
-package com.islandmodel.entitie.animal.predator;
+package com.islandmodel.entity.animal.predator;
 
-import com.islandmodel.entitie.EntitieType;
+import com.islandmodel.entity.EntityType;
 
 public class Fox extends Predator{
 
     public Fox() {
-        super(EntitieType.FOX);
+        super(EntityType.FOX);
     }
 
     @Override

@@ -1,13 +1,12 @@
-package com.islandmodel.entitie.animal.herbivore;
+package com.islandmodel.entity.animal.herbivore;
 
-import com.islandmodel.entitie.EntitieType;
+import com.islandmodel.entity.EntityType;
 
 public class Duck extends Herbivore{
 
     public Duck() {
-        super(EntitieType.DUCK);
+        super(EntityType.DUCK);
     }
-
 
     @Override
     public String toString() {

@@ -1,18 +1,21 @@
-package com.islandmodel.entitie;
+package com.islandmodel.entity;
 
 import com.islandmodel.Config;
-import com.islandmodel.entitie.animal.Animal;
-import com.islandmodel.entitie.animal.herbivore.*;
-import com.islandmodel.entitie.animal.predator.*;
-import com.islandmodel.entitie.plant.Plant;
+import com.islandmodel.entity.animal.herbivore.*;
+import com.islandmodel.entity.animal.predator.*;
+import com.islandmodel.entity.plant.Plant;
+import com.islandmodel.island.Location;
 
-public class Entitie {
+public abstract class Entity {
 
-    private final EntitieType type;
+    private final EntityType type;
     private boolean removable;
     private int weight;
+    private int age;
 
-    public static Entitie returnNewEntity(int random) {
+    public abstract void multiply(Location currentLocation);
+
+    public static Entity returnNewEntity(int random) {
         return switch (random) {
             case 0 -> new Bear();
             case 1 -> new Boa();
@@ -33,13 +36,14 @@ public class Entitie {
         };
     }
 
-    public Entitie(EntitieType type) {
+    protected Entity(EntityType type) {
         this.type = type;
         this.removable = false;
         this.weight = Config.ENTITY_WEIGHT[type.ordinal()];
+        this.age = 0;
     }
 
-    public EntitieType getType() {
+    public EntityType getType() {
         return type;
     }
 
@@ -55,8 +59,23 @@ public class Entitie {
         return weight;
     }
 
-    public boolean onTheMenu(Entitie entitieForFood) {
-        return Config.CHANCES_TO_EAT[this.type.ordinal()][entitieForFood.type.ordinal()] != 0;
+    public boolean onTheMenu(int entityForFoodType) {
+        return Config.CHANCES_TO_EAT[this.type.ordinal()][entityForFoodType] != 0;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge() {
+        ++this.age;
+    }
+
+    public void itIsNewDay() {
+        setAge();
+        if (getAge() > Config.MAX_AGE_ENTITIES[getType().ordinal()]) {
+            setRemovable();
+        }
     }
 
     @Override

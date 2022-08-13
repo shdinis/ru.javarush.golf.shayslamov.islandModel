@@ -1,11 +1,11 @@
-package com.islandmodel.entitie.animal.herbivore;
+package com.islandmodel.entity.animal.herbivore;
 
-import com.islandmodel.entitie.EntitieType;
+import com.islandmodel.entity.EntityType;
 
 public class Sheep extends Herbivore{
 
     public Sheep() {
-        super(EntitieType.SHEEP);
+        super(EntityType.SHEEP);
     }
 
     @Override

@@ -2,7 +2,9 @@ package com.islandmodel.utils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Randomizer {
+public final class Randomizer {
+    private Randomizer() {
+    }
 
     public static int getRandom(int to) {
         return ThreadLocalRandom.current().nextInt(to);
@@ -13,6 +15,6 @@ public class Randomizer {
     }
 
     public static boolean getRandomBoolean(int chance) {
-        return chance / 100 <= getRandom(100);
+        return chance <= getRandom(100);
     }
 }

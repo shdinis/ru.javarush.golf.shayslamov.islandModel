@@ -1,12 +1,16 @@
 package com.islandmodel;
 
+import com.islandmodel.GameWorker.Game;
+import com.islandmodel.initializer.Initializer;
 import com.islandmodel.island.Island;
 
 public class Runner {
     public static void main(String[] args) {
-        Island island = new Island();
+        Initializer initializer = new Initializer();
+        Island island = initializer.createIsland();
         island.print();
-        island.initialize();
-        island.print();
+        Game game = new Game(island);
+
+
     }
 }

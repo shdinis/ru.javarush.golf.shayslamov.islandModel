@@ -1,11 +1,11 @@
-package com.islandmodel.entitie.animal.herbivore;
+package com.islandmodel.entity.animal.herbivore;
 
-import com.islandmodel.entitie.EntitieType;
+import com.islandmodel.entity.EntityType;
 
 public class Buffalo extends Herbivore{
 
     public Buffalo() {
-        super(EntitieType.BUFFALO);
+        super(EntityType.BUFFALO);
     }
 
     @Override
