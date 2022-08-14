@@ -11,6 +11,9 @@ public final class Randomizer {
     }
 
     public static int getRandom(int from, int to) {
+        if (to <= 0) {
+            to = 0;
+        }
         return ThreadLocalRandom.current().nextInt(from, to);
     }
 

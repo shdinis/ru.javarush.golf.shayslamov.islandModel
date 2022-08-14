@@ -15,7 +15,7 @@ public class GameWorker extends Thread {
 
     private static final long LIFE_CYCLE_DURATION = 1000;
     private static final Boolean STOP_ON_TIMEOUT = true;
-    private static final int GAME_DURATION = 20000;
+    private static final int GAME_DURATION = 100000;
 
     public GameWorker(Game game) {
         this.game = game;
@@ -23,7 +23,7 @@ public class GameWorker extends Thread {
 
     @Override
     public void run() {
-        game.getIsland().showStatistic();
+        game.getIsland().showStatistic(game.getIsland().getDay());
 
         ScheduledExecutorService gameScheduledThreadPool = Executors.newScheduledThreadPool(4);
         gameScheduledThreadPool.scheduleWithFixedDelay(this::runAndWaitEntityWorkers, LIFE_CYCLE_DURATION, LIFE_CYCLE_DURATION, TimeUnit.MILLISECONDS);
@@ -48,7 +48,8 @@ public class GameWorker extends Thread {
 
         try {
             if (fixedThreadPool.awaitTermination(1, TimeUnit.SECONDS)) {
-                game.getIsland().showStatistic();
+                game.getIsland().plusDay();
+                game.getIsland().showStatistic(game.getIsland().getDay());
                 for (Location[] rows : game.getIsland().getLocations()) {
                     for (Location location : rows) {
                         clearingLocation(location);
@@ -64,7 +65,6 @@ public class GameWorker extends Thread {
         try {
             location.getLock().lock();
             location.clearingResetDayMapEntitiesToLocation();
-
         } finally {
             location.getLock().unlock();
         }
@@ -78,6 +78,6 @@ public class GameWorker extends Thread {
         }
         //
         System.out.println("The game is over by timeout");
-//        System.exit(1);
+        System.exit(1);
     }
 }

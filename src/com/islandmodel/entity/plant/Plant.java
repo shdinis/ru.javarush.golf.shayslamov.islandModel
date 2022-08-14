@@ -30,10 +30,10 @@ public class Plant extends Entity {
     private void safeMultiply(Location currentLocation) {
         currentLocation.getLock().lock();
         try {
-            int plantsToLocationQuantity = currentLocation.getOneTypeOfEntitiesToLocation(getType().ordinal()).size();
-            int maxQuantityInLocation = Config.MAX_PER_LOCATION[getType().ordinal()];
+            int plantsToLocationQuantity = currentLocation.getOneTypeOfEntitiesToLocation(getTypeInt()).size();
+            int maxQuantityInLocation = Config.MAX_PER_LOCATION[getTypeInt()];
             if (plantsToLocationQuantity < maxQuantityInLocation) {
-                currentLocation.addEntityToLocation(getType().ordinal());
+                currentLocation.addEntityToLocation(getTypeInt());
             }
         } finally {
             currentLocation.getLock().unlock();

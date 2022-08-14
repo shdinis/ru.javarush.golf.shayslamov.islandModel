@@ -24,7 +24,7 @@ public class EntityWorker implements Runnable {
         for (Location[] rows : locations) {
             for (Location location : rows) {
                 createTasksForLocation(location);
-             }
+            }
         }
     }
 
@@ -40,7 +40,6 @@ public class EntityWorker implements Runnable {
                 location.getLock().unlock();
             }
         }
-
         tasks.forEach(Task::perform);
         tasks.clear();
     }

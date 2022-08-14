@@ -49,8 +49,8 @@ public abstract class Entity {
         this.count = ++totalCounter;
     }
 
-    public EntityType getType() {
-        return type;
+    public int getTypeInt() {
+        return type.ordinal();
     }
 
     public void setRemovable() {
@@ -66,7 +66,7 @@ public abstract class Entity {
     }
 
     public boolean onTheMenu(int entityForFoodType) {
-        return Config.CHANCES_TO_EAT[this.type.ordinal()][entityForFoodType] != 0;
+        return Config.CHANCES_TO_EAT[this.getTypeInt()][entityForFoodType] != 0;
     }
 
     public int getAge() {
@@ -79,7 +79,7 @@ public abstract class Entity {
 
     public void itIsNewDay() {
         setAge();
-        if (getAge() > Config.MAX_AGE_ENTITIES[getType().ordinal()]) {
+        if (getAge() > Config.MAX_AGE_ENTITIES[getTypeInt()]) {
             this.setRemovable();
         }
     }

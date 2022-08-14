@@ -2,8 +2,8 @@ package com.islandmodel.gameworker;
 
 import com.islandmodel.island.Island;
 
-public class Game extends Thread{
-private final Island island;
+public class Game extends Thread {
+    private final Island island;
 
     public Game(Island island) {
         this.island = island;

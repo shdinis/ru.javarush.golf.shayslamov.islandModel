@@ -56,7 +56,7 @@ public class Location {
     public String toString() {
         String result = "";
         for (Map.Entry<Integer, Set<Entity>> entry : entitiesToLocation.entrySet()) {
-            System.out.print(EntityType.values()[entry.getKey()] + "=" + entry.getValue().size() + " ");
+            System.out.print(EntityType.values()[entry.getKey()].getIcon() + "=" + entry.getValue().size() + " ");
         }
         return result;
     }
