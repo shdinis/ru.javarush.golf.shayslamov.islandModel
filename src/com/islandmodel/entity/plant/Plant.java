@@ -16,22 +16,27 @@ public class Plant extends Entity {
         safeMultiply(currentLocation);
     }
 
+    @Override
+    public boolean eat(Location currentLocation) {
+        // Do nothing
+        return false;
+    }
+
+    @Override
+    public void move(Location currentLocation) {
+        // Do nothing
+    }
+
     private void safeMultiply(Location currentLocation) {
         currentLocation.getLock().lock();
         try {
             int plantsToLocationQuantity = currentLocation.getOneTypeOfEntitiesToLocation(getType().ordinal()).size();
             int maxQuantityInLocation = Config.MAX_PER_LOCATION[getType().ordinal()];
-            if (plantsToLocationQuantity <= maxQuantityInLocation) {
+            if (plantsToLocationQuantity < maxQuantityInLocation) {
                 currentLocation.addEntityToLocation(getType().ordinal());
             }
         } finally {
             currentLocation.getLock().unlock();
         }
     }
-
-    @Override
-    public String toString() {
-        return "\uD83C\uDF3F";
-    }
-
 }

@@ -8,9 +8,4 @@ public class Bear extends Predator {
         super(EntityType.BEAR);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83D\uDC3B";
-    }
-
 }

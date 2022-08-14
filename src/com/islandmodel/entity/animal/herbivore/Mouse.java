@@ -8,8 +8,4 @@ public class Mouse extends Herbivore{
         super(EntityType.MOUSE);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83D\uDC01";
-    }
 }

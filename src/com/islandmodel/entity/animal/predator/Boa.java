@@ -8,8 +8,4 @@ public class Boa extends Predator{
         super(EntityType.BOA);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83D\uDC0D";
-    }
 }

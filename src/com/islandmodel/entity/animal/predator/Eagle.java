@@ -8,8 +8,4 @@ public class Eagle extends Predator{
         super(EntityType.EAGLE);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83E\uDD85";
-    }
 }

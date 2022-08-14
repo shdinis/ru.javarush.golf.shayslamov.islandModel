@@ -8,8 +8,4 @@ public class Duck extends Herbivore{
         super(EntityType.DUCK);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83E\uDD86";
-    }
 }

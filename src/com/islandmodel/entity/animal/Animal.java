@@ -6,13 +6,19 @@ import com.islandmodel.entity.EntityType;
 import com.islandmodel.island.Location;
 import com.islandmodel.utils.Randomizer;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class Animal extends Entity {
+public abstract class Animal extends Entity {
 
     private int saturation;
     private boolean canMove;
+
+    protected Animal(EntityType type) {
+        super(type);
+        this.canMove = false;
+    }
 
     @Override
     public void itIsNewDay() {
@@ -29,27 +35,23 @@ public class Animal extends Entity {
         return canMove;
     }
 
-    protected Animal(EntityType type) {
-        super(type);
-        this.canMove = false;
+    private int getSaturation() {
+        return saturation;
     }
 
-    private ArrayList<Entity> makeMenu(Animal animalEater, Location currentLocation) {
-        ArrayList<Entity> result = new ArrayList<>();
+    public void setSaturation(int saturation) {
+        this.saturation = Math.min(this.saturation + saturation, Config.MAX_SATURATION[this.getType().ordinal()]);
+    }
+
+    private Set<Entity> makeMenu(Animal animalEater, Location currentLocation) {
+        Set<Entity> result = new HashSet<>() {
+        };
         for (int entityTypeForFood = 0; entityTypeForFood < EntityType.values().length; entityTypeForFood++) {
             if (animalEater.onTheMenu(entityTypeForFood)) {
                 result.addAll(currentLocation.getOneTypeOfEntitiesToLocation(entityTypeForFood));
             }
         }
         return result;
-    }
-
-    public int getSaturation() {
-        return saturation;
-    }
-
-    public void setSaturation(int saturation) {
-        this.saturation = Math.min(this.saturation + saturation, Config.MAX_SATURATION[this.getType().ordinal()]);
     }
 
     @Override
@@ -82,16 +84,16 @@ public class Animal extends Entity {
     private boolean safeEat(Location currentLocation) {
         currentLocation.getLock().lock();
         boolean ate = false;
-
         try {
-            ArrayList<Entity> menu = makeMenu(this, currentLocation);
+            Set<Entity> menu = makeMenu(this, currentLocation);
             for (Entity entity : menu) {
                 int chance = Config.CHANCES_TO_EAT[this.getType().ordinal()][entity.getType().ordinal()];
                 if (Randomizer.getRandomBoolean(chance)) {
                     entity.setRemovable();
-                    setSaturation(entity.getWeight()); //вес жертвы должен перейти в желудок поедателя и все(т.к. среди нас нет падльщиков)
+                    setSaturation(entity.getWeight());
                 }
                 if (this.getSaturation() == Config.MAX_SATURATION[this.getType().ordinal()]) {
+                    entity.setRemovable();
                     ate = true;
                     break;
                 }
@@ -112,31 +114,35 @@ public class Animal extends Entity {
             int speed = getSpeed(this.getType().ordinal());
             if (speed > 0 && isCanMove()) {
                 Location destinationLocation = getNextLocation(currentLocation, speed);
-                ArrayList<Entity> currentLocationEntities = currentLocation.getOneTypeOfEntitiesToLocation(this.getType().ordinal());
+                if (destinationLocation == currentLocation) {
+                    return;
+                }
+                Set<Entity> currentLocationEntities = currentLocation.getOneTypeOfEntitiesToLocation(this.getType().ordinal());
+
                 currentLocationEntities.remove(this);
 
-                ArrayList<Entity> destinationLocationEntities = destinationLocation.getOneTypeOfEntitiesToLocation(this.getType().ordinal());
-                destinationLocationEntities.add(this);//беспалева добавили существо в список организмов соседней локации, вот для чего нужен отдельный список задач Task
+                Set<Entity> destinationLocationEntities = destinationLocation.getOneTypeOfEntitiesToLocation(this.getType().ordinal());
+                destinationLocationEntities.add(this);
+                this.canNotMove();
             }
-            canNotMove();
+
         } finally {
             currentLocation.getLock().unlock();
         }
     }
 
-    private int getSpeed(int type) {
-        int maxSpeed = Config.TRAVEL_DISTANCE[type];
-        return Randomizer.getRandom(0, maxSpeed);
-    }
-
     private Location getNextLocation(Location currentArea, int currentSpeed) {
         List<Location> nearbyLocations = currentArea.getNearbyLocations();
         if (currentSpeed > 0) {
-            int nextAreaIndex = Randomizer.getRandom(0, nearbyLocations.size() - 1);
-            return getNextLocation(nearbyLocations.get(nextAreaIndex - 1), currentSpeed - 1);
+            int nextLocationIndex = Randomizer.getRandom(0, nearbyLocations.size() - 1);
+            return getNextLocation(nearbyLocations.get(nextLocationIndex), currentSpeed - 1);
         } else {
             return currentArea;
         }
+    }
+
+    private int getSpeed(int type) {
+        return Config.TRAVEL_DISTANCE[type];
     }
 }
 

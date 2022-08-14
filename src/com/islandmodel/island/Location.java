@@ -3,60 +3,60 @@ package com.islandmodel.island;
 import com.islandmodel.entity.Entity;
 import com.islandmodel.entity.EntityType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Location {
 
-    private final Map<Integer, ArrayList<Entity>> entitiesToLocation;
-    private final ArrayList<Location> nearbyLocations;
-
-    private ReentrantLock lock = new ReentrantLock();
+    private Map<Integer, Set<Entity>> entitiesToLocation;
+    private List<Location> nearbyLocations;
+    private final Lock lock = new ReentrantLock();
 
     public Location() {
         this.entitiesToLocation = new HashMap<>();
-        initializeMapEntitiesToLocation();
         this.nearbyLocations = new ArrayList<>();
     }
 
-    private void initializeMapEntitiesToLocation() {
-        for (int i = 0; i < EntityType.values().length; i++) {
-            entitiesToLocation.put(i, new ArrayList<>());
-        }
+    public Map<Integer, Set<Entity>> getEntitiesToLocation() {
+        return entitiesToLocation;
     }
 
-    public void clearingMapEntitiesToLocation(){
-        for (Map.Entry<Integer, ArrayList<Entity>> entry : entitiesToLocation.entrySet()) {
+    public Set<Entity> getOneTypeOfEntitiesToLocation(int typeOfEntityToLocation) {
+        return entitiesToLocation.get(typeOfEntityToLocation);
+    }
+
+    public void setEntitiesToLocation(Map<Integer, Set<Entity>> entitiesToLocation) {
+        this.entitiesToLocation = entitiesToLocation;
+    }
+
+    public void clearingResetDayMapEntitiesToLocation() {
+        for (Map.Entry<Integer, Set<Entity>> entry : entitiesToLocation.entrySet()) {
             entry.getValue().removeIf(Entity::isRemovable);
+            entry.getValue().iterator().forEachRemaining(Entity::itIsNewDay);
         }
     }
 
-    public ArrayList<Location> getNearbyLocations() {
+    public List<Location> getNearbyLocations() {
         return nearbyLocations;
     }
 
-    public void setNearbyLocations(ArrayList<Location> nearbyLocations) {
-        this.nearbyLocations.addAll(nearbyLocations);
-    }
-
-    public ArrayList<Entity> getOneTypeOfEntitiesToLocation(int typeOfEntityToLocation) {
-        return entitiesToLocation.get(typeOfEntityToLocation);
+    public void setNearbyLocations(List<Location> nearbyLocations) {
+        this.nearbyLocations = nearbyLocations;
     }
 
     public void addEntityToLocation(int typeOfEntityToCreate) {
         entitiesToLocation.get(typeOfEntityToCreate).add(Entity.returnNewEntity(typeOfEntityToCreate));
     }
 
-    public ReentrantLock getLock() {
+    public Lock getLock() {
         return lock;
     }
 
     public String toString() {
         String result = "";
-        for (Map.Entry<Integer, ArrayList<Entity>> entry : entitiesToLocation.entrySet()) {
-            System.out.print(EntityType.values()[entry.getKey()]+"="+ entry.getValue().size()+" ");
+        for (Map.Entry<Integer, Set<Entity>> entry : entitiesToLocation.entrySet()) {
+            System.out.print(EntityType.values()[entry.getKey()] + "=" + entry.getValue().size() + " ");
         }
         return result;
     }

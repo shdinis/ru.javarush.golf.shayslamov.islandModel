@@ -6,14 +6,19 @@ import com.islandmodel.entity.animal.predator.*;
 import com.islandmodel.entity.plant.Plant;
 import com.islandmodel.island.Location;
 
-public abstract class Entity {
+import java.util.Objects;
 
+public abstract class Entity {
+    private static long totalCounter = 0;
+    private final long count;
     private final EntityType type;
     private boolean removable;
     private int weight;
     private int age;
 
     public abstract void multiply(Location currentLocation);
+    public abstract boolean eat(Location currentLocation);
+    public abstract void move(Location currentLocation);
 
     public static Entity returnNewEntity(int random) {
         return switch (random) {
@@ -41,6 +46,7 @@ public abstract class Entity {
         this.removable = false;
         this.weight = Config.ENTITY_WEIGHT[type.ordinal()];
         this.age = 0;
+        this.count = ++totalCounter;
     }
 
     public EntityType getType() {
@@ -74,8 +80,21 @@ public abstract class Entity {
     public void itIsNewDay() {
         setAge();
         if (getAge() > Config.MAX_AGE_ENTITIES[getType().ordinal()]) {
-            setRemovable();
+            this.setRemovable();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return count == entity.count && type == entity.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(count, type);
     }
 
     @Override

@@ -8,8 +8,4 @@ public class Sheep extends Herbivore{
         super(EntityType.SHEEP);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83D\uDC11";
-    }
 }

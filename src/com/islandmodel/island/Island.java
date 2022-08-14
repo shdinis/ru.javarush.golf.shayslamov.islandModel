@@ -12,7 +12,7 @@ public class Island {
         return locations;
     }
 
-    public void print() {
+    public void showStatistic() {
         System.out.println("=".repeat(200));
         for (int col = 0; col < locations.length; col++) {
             for (int row = 0; row < locations[col].length; row++) {

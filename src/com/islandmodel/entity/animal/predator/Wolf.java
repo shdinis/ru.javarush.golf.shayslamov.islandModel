@@ -8,8 +8,4 @@ public class Wolf extends Predator {
         super(EntityType.WOLF);
     }
 
-    @Override
-    public String toString() {
-        return "\uD83D\uDC3A";
-    }
 }

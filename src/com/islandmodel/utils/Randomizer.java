@@ -15,6 +15,6 @@ public final class Randomizer {
     }
 
     public static boolean getRandomBoolean(int chance) {
-        return chance <= getRandom(100);
+        return chance >= getRandom(100);
     }
 }

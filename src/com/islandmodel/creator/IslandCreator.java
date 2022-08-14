@@ -1,10 +1,11 @@
 package com.islandmodel.creator;
 
+import com.islandmodel.entity.Entity;
 import com.islandmodel.island.Island;
 import com.islandmodel.island.Location;
 import com.islandmodel.utils.Randomizer;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static com.islandmodel.Config.*;
 
@@ -14,9 +15,7 @@ public class IslandCreator {
         Island island = new Island(COLS, ROWS);
         createLocations(island);
         findNearbyLocations(island);
-        initializeAnimal(island);
         return island;
-
     }
 
     private void createLocations(Island island) {
@@ -24,7 +23,31 @@ public class IslandCreator {
 
         for (int col = 0; col < locations.length; col++) {
             for (int row = 0; row < locations[col].length; row++) {
-                locations[col][row] = new Location();
+                locations[col][row] = createLocation();
+            }
+        }
+        initializeAnimal(island);
+    }
+
+    private Location createLocation() {
+        Map<Integer, Set<Entity>> result = new HashMap<>();
+
+        for (int i = 0; i < ENTITIES_INITIAL_QUANTITY.length; i++) {
+            result.put(i, new HashSet<>());
+        }
+        Location newLocation = new Location();
+        newLocation.setEntitiesToLocation(result);
+        return newLocation;
+    }
+
+    private void initializeAnimal(Island island) {
+        Location[][] locations = island.getLocations();
+
+        for (int typeOfEntityToCreate = 0; typeOfEntityToCreate < ENTITIES_INITIAL_QUANTITY.length; typeOfEntityToCreate++) {//перебираем виды животных
+            for (int quantity = 0; quantity < ENTITIES_INITIAL_QUANTITY[typeOfEntityToCreate]; quantity++) {
+                int randomCol = Randomizer.getRandom(COLS);
+                int randomRow = Randomizer.getRandom(ROWS);
+                locations[randomCol][randomRow].addEntityToLocation(typeOfEntityToCreate);
             }
         }
     }
@@ -34,7 +57,7 @@ public class IslandCreator {
 
         for (int col = 0; col < locations.length; col++) {
             for (int row = 0; row < locations[col].length; row++) {
-                ArrayList<Location> result = new ArrayList<>();
+                List<Location> result = new ArrayList<>();
                 if (0 < col) {
                     result.add(locations[col - 1][row]);
                 }
@@ -51,19 +74,4 @@ public class IslandCreator {
             }
         }
     }
-
-
-    private void initializeAnimal(Island island) {
-        Location[][] locations = island.getLocations();
-
-        for (int typeOfEntitieToCreate = 0; typeOfEntitieToCreate < ENTITIES_INITIAL_QUANTITY.length; typeOfEntitieToCreate++) {//перебираем виды животных
-            for (int quantity = 0; quantity < ENTITIES_INITIAL_QUANTITY[typeOfEntitieToCreate]; quantity++) {
-                int randomCol = Randomizer.getRandom(COLS);
-                int randomRow = Randomizer.getRandom(ROWS);
-                locations[randomCol][randomRow].addEntityToLocation(typeOfEntitieToCreate);
-            }
-        }
-    }
-
-
 }

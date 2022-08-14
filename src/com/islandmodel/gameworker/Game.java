@@ -1,6 +1,5 @@
-package com.islandmodel.GameWorker;
+package com.islandmodel.gameworker;
 
-import com.islandmodel.creator.IslandCreator;
 import com.islandmodel.island.Island;
 
 public class Game extends Thread{
@@ -13,5 +12,9 @@ private final Island island;
     @Override
     public void run() {
         super.run();
+    }
+
+    public Island getIsland() {
+        return island;
     }
 }
